@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="ru" translate="no">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="google" content="notranslate">
+<title>Проверочный тест · уроки 1–24</title>
+<style>
+:root{--bg:#faf7f2;--card:#fff;--ink:#2b2622;--mut:#7a6f66;--red:#b8322a;--red2:#f6e3e1;--gold:#c8962e;--line:#e6ddd2;--sel:#2f6f8f;--sel2:#e3f0f6;--ok:#2e7d4f}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,"PingFang SC","Noto Sans SC",sans-serif}
+body.locked{-webkit-user-select:none;user-select:none}
+.wrap{max-width:860px;margin:0 auto;padding:16px}
+.z{font-family:"PingFang SC","Noto Sans SC","Microsoft YaHei","Songti SC",serif}
+header.top{position:sticky;top:0;z-index:5;background:var(--bg);border-bottom:1px solid var(--line)}
+header.top .wrap{display:flex;align-items:center;gap:12px;padding:10px 16px;flex-wrap:wrap}
+.brand{font-weight:700}
+.brand span{color:var(--red)}
+.timer{margin-left:auto;font-variant-numeric:tabular-nums;font-weight:700;background:var(--card);border:1px solid var(--line);border-radius:999px;padding:4px 14px}
+.timer.warn{color:#fff;background:var(--red);border-color:var(--red)}
+.exits{font-size:14px;color:var(--mut)}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;width:100%}
+.tab{border:1px solid var(--line);background:var(--card);border-radius:10px;padding:6px 10px;font-size:14px;cursor:pointer}
+.tab.on{border-color:var(--red);background:var(--red2)}
+.tab .cnt{color:var(--mut);margin-left:4px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px;margin:16px 0}
+h1{font-size:26px;margin:4px 0 8px}
+h2{font-size:21px;margin:0 0 4px}
+.lead{color:var(--mut);margin:0 0 12px}
+.btn{font:inherit;border:0;border-radius:12px;padding:10px 18px;background:var(--red);color:#fff;font-weight:600;cursor:pointer}
+.btn.ghost{background:var(--card);color:var(--ink);border:1px solid var(--line)}
+.btn:disabled{opacity:.45;cursor:default}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+input[type=text],input[type=password]{font:inherit;width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:#fff}
+input.zh{font-size:20px}
+.rules li{margin:4px 0}
+.hero{font-size:44px;line-height:1}
+/* matching */
+.mgrid{display:grid;grid-template-columns:1fr 1fr 1.3fr;gap:8px}
+.mcol h3{font-size:13px;color:var(--mut);margin:0 0 4px;font-weight:600;text-transform:uppercase;letter-spacing:.04em}
+.mi{position:relative;display:block;width:100%;text-align:left;font:inherit;border:1px solid var(--line);background:#fff;border-radius:10px;padding:8px 34px 8px 10px;margin:0 0 6px;cursor:pointer;min-height:42px}
+.mi.h{font-size:22px}
+.mi.act{border-color:var(--sel);box-shadow:0 0 0 2px var(--sel2)}
+.mi .b{position:absolute;right:8px;top:50%;transform:translateY(-50%);min-width:22px;height:22px;border-radius:11px;font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;color:#fff}
+.round{margin:0 0 18px}
+.round>b{display:block;margin:0 0 6px}
+/* build */
+.item{border-top:1px dashed var(--line);padding:14px 0}
+.item:first-of-type{border-top:0}
+.ru{font-weight:600;margin:0 0 8px}
+.ans{min-height:52px;border:2px dashed var(--line);border-radius:12px;padding:6px;display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin:0 0 8px}
+.pool{display:flex;gap:6px;flex-wrap:wrap}
+.tile{font:inherit;font-size:20px;border:1px solid var(--line);background:#fffaf0;border-radius:10px;padding:6px 12px;cursor:pointer}
+.tile.used{visibility:hidden}
+.ans .tile{background:var(--sel2);border-color:var(--sel)}
+/* choice */
+.zhq{font-size:24px;margin:0 0 8px}
+.opt{display:block;width:100%;text-align:left;font:inherit;border:1px solid var(--line);background:#fff;border-radius:10px;padding:9px 12px;margin:0 0 6px;cursor:pointer}
+.opt.on{border-color:var(--sel);background:var(--sel2);font-weight:600}
+.nav{display:flex;justify-content:space-between;gap:10px;margin:8px 0 30px}
+/* overlay */
+.ov{position:fixed;inset:0;background:rgba(30,20,15,.72);display:none;align-items:center;justify-content:center;z-index:50;padding:16px}
+.ov.on{display:flex}
+.ov .card{max-width:460px;text-align:center}
+.big{font-size:48px}
+/* result */
+.res td,.res th{padding:6px 8px;border-bottom:1px solid var(--line);text-align:left}
+.res{border-collapse:collapse;width:100%}
+.code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:28px;letter-spacing:.15em;background:#fff8e6;border:1px dashed var(--gold);border-radius:10px;padding:6px 14px;display:inline-block}
+.ok{color:var(--ok)}.bad{color:var(--red)}
+.hide{display:none!important}
+.small{font-size:14px;color:var(--mut)}
+@media (max-width:620px){
+  .mgrid{grid-template-columns:1fr 1fr;}
+  .mcol.tr{grid-column:1 / span 2}
+  .mi.h{font-size:20px}
+}
+</style>
+</head>
+<body>
+<noscript><div class="wrap"><div class="card">Тест работает только в браузере с включённым JavaScript. Откройте ссылку в Chrome, Safari или другом браузере, а не в предпросмотре мессенджера.</div></div></noscript>
+
+<header class="top hide" id="top">
+  <div class="wrap">
+    <div class="brand">🏮 Тест <span>1–24</span></div>
+    <div class="exits" id="exitsBox">🚪 выходов: <b id="exN">0</b> из 3</div>
+    <div class="timer" id="timer">40:00</div>
+    <div class="tabs" id="tabs"></div>
+  </div>
+</header>
+
+<main class="wrap" id="main"></main>
+
+<div class="ov" id="ov"><div class="card">
+  <div class="big">⚠️</div>
+  <h2>Вы вышли из теста</h2>
+  <p id="ovText"></p>
+  <button class="btn" id="ovBtn">Вернуться к тесту</button>
+</div></div>
+
+<script>
+(function(){
+"use strict";
+var LIMIT = 40*60*1000, MAX_EXITS = 3, PIN = "2424", KEY = "kondr_test_1_24_v1", SALT = "hanzi-1-24-laoshi";
+
+/* ---------- DATA ---------- */
+var WORDS = [
+ ["银行","yínháng","банк"],["图书馆","túshūguǎn","библиотека"],["宿舍","sùshè","общежитие"],["工程师","gōngchéngshī","инженер"],
+ ["衬衫","chènshān","рубашка"],["裙子","qúnzi","юбка"],["食堂","shítáng","столовая"],["起床","qǐ chuáng","вставать с постели"],
+ ["休息","xiūxi","отдыхать"],["喜欢","xǐhuan","нравиться, любить"],["音乐","yīnyuè","музыка"],["生日","shēngrì","день рождения"],
+ ["漂亮","piàoliang","красивый"],["礼物","lǐwù","подарок"],["厨房","chúfáng","кухня"],["窗户","chuānghu","окно"],
+ ["复习","fùxí","повторять (урок)"],["工厂","gōngchǎng","завод, фабрика"],["锻炼","duànliàn","заниматься спортом"],["认真","rènzhēn","старательный"],
+ ["词典","cídiǎn","словарь"],["杂志","zázhì","журнал"],["火车","huǒchē","поезд"],["干净","gānjìng","чистый"]
+];
+var BUILD = [
+ [["我","在","银行","工作"],["我在银行工作"],"Я работаю в банке."],
+ [["他","给","妈妈","写信"],["他给妈妈写信"],"Он пишет письмо маме."],
+ [["你","喝","花茶","还是","红茶"],["你喝花茶还是红茶"],"Ты будешь пить жасминовый чай или чёрный?"],
+ [["我们","班","有","十二个","学生"],["我们班有十二个学生"],"В нашей группе двенадцать студентов."],
+ [["晚上","八点","我","去","看","电影"],["晚上八点我去看电影","我晚上八点去看电影"],"В восемь вечера я иду в кино."],
+ [["她","正在","看","电视","呢"],["她正在看电视呢"],"Она сейчас смотрит телевизор."],
+ [["桌子","上边","有","一本","词典"],["桌子上边有一本词典"],"На столе лежит словарь."],
+ [["老师","教","我们","语法"],["老师教我们语法"],"Преподаватель учит нас грамматике."],
+ [["我","每天","六点","起床"],["我每天六点起床","每天我六点起床"],"Я каждый день встаю в шесть часов."],
+ [["这条","裙子","是","新","的"],["这条裙子是新的"],"Эта юбка новая."]
+];
+var ZR = [
+ ["你哥哥在哪儿工作？",["Где работает твой старший брат?","Где живёт твой старший брат?","Твой младший брат работает здесь?"]],
+ ["这条裙子是新的。",["Эта юбка новая.","Эта новая юбка — моя.","Эти брюки новые."]],
+ ["现在差五分三点。",["Сейчас без пяти три.","Сейчас пять минут четвёртого.","Сейчас три часа пятнадцать минут."]],
+ ["你喝咖啡还是喝茶？",["Ты будешь пить кофе или чай?","Ты пьёшь и кофе, и чай?","Ты не пьёшь ни кофе, ни чай?"]],
+ ["他们班的同学学习都很认真。",["Все студенты их группы учатся очень старательно.","Не все студенты их группы учатся старательно.","Их одногруппники очень весёлые."]],
+ ["请别在这儿吸烟。",["Пожалуйста, не курите здесь.","Здесь, пожалуйста, можно курить.","Он здесь не курит."]],
+ ["我打电话的时候，他正在吃饭。",["Когда я позвонил, он как раз ел.","Когда он позвонил, я как раз ел.","Я позвоню ему после еды."]],
+ ["我家对面有一个小公园。",["Напротив моего дома есть маленький парк.","Рядом с моим домом большой парк.","За парком находится мой дом."]]
+];
+var RZ = [
+ ["Как тебя зовут?",["你叫什么名字","你叫什么"],"你叫什么名字？"],
+ ["У меня нет старшей сестры.",["我没有姐姐"],"我没有姐姐。"],
+ ["Сколько студентов в вашей группе?",["你们班有多少学生","你们班有多少个学生","你们班有几个学生","你们班有多少个同学","你们班有多少同学","你们班有几个同学"],"你们班有多少学生？"],
+ ["Я иду в библиотеку брать книги.",["我去图书馆借书","我要去图书馆借书","我到图书馆去借书"],"我去图书馆借书。"],
+ ["Сегодня мой день рождения, мне двадцать лет.",["今天是我的生日我今年二十岁","今天是我的生日我二十岁","今天是我生日我今年二十岁","今天是我生日我二十岁","今天我的生日我今年二十岁","今天我生日我今年二十岁","今天是我的生日我今年二十岁了","今天是我的生日我二十岁了","今天是我的生日我今年20岁","今天是我的生日我20岁"],"今天是我的生日，我今年二十岁。"],
+ ["Она сейчас смотрит телевизор.",["她正在看电视呢","她正在看电视","她在看电视呢","她在看电视","她现在正在看电视呢","她现在正在看电视","她现在在看电视呢","她现在在看电视","她正看电视呢","她现在看电视呢"],"她正在看电视呢。"],
+ ["Это не мой словарь.",["这不是我的词典","这本词典不是我的","这不是我的字典"],"这不是我的词典。"],
+ ["Мы каждый день едим в столовой.",["我们每天在食堂吃饭","每天我们在食堂吃饭","我们每天都在食堂吃饭","每天我们都在食堂吃饭"],"我们每天在食堂吃饭。"]
+];
+
+/* ---------- helpers ---------- */
+function rng(seed){return function(){seed|=0;seed=seed+0x6D2B79F5|0;var t=Math.imul(seed^seed>>>15,1|seed);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
+function shuffle(a,r){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(r()*(i+1));var t=a[i];a[i]=a[j];a[j]=t}return a}
+function range(n){var a=[];for(var i=0;i<n;i++)a.push(i);return a}
+function el(tag,cls,html){var e=document.createElement(tag);if(cls)e.className=cls;if(html!=null)e.innerHTML=html;return e}
+function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
+function norm(s){return String(s||"").replace(/[\s，。？！、,.?!；;：:“”"'…·—\-（）()]/g,"")}
+function hash(str){var h=0x811c9dc5;for(var i=0;i<str.length;i++){h^=str.charCodeAt(i);h=Math.imul(h,0x01000193)>>>0}return h}
+function codeOf(name,score,total,exits,secs){var h=hash(SALT+"|"+name.trim().toLowerCase()+"|"+score+"|"+total+"|"+exits+"|"+secs);return h.toString(36).toUpperCase().padStart(7,"0").slice(-6)}
+function fmt(ms){ms=Math.max(0,ms);var s=Math.ceil(ms/1000);var m=Math.floor(s/60);s%=60;return (m<10?"0":"")+m+":"+(s<10?"0":"")+s}
+var COLORS=["#b8322a","#2f6f8f","#c8962e","#2e7d4f","#7b4fa0","#d0621b"];
+
+/* ---------- storage ---------- */
+var S=null;
+function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
+function load(){try{var v=localStorage.getItem(KEY);return v?JSON.parse(v):null}catch(e){return null}}
+
+function newSession(name){
+  var seed=(Date.now()^Math.floor(Math.random()*1e9))>>>0, r=rng(seed);
+  var w=shuffle(range(WORDS.length),r).slice(0,12);
+  var b=shuffle(range(BUILD.length),r).slice(0,6);
+  var zr=shuffle(range(ZR.length),r).slice(0,5);
+  var rz=shuffle(range(RZ.length),r).slice(0,5);
+  var rounds=[w.slice(0,6),w.slice(6)].map(function(ids){return{ids:ids,py:shuffle(ids,r),tr:shuffle(ids,r)}});
+  return{name:name,seed:seed,start:Date.now(),exits:0,done:false,sec:0,
+    rounds:rounds,match:[{},{}],
+    build:b.map(function(i){return{i:i,order:shuffle(range(BUILD[i][0].length),r),ans:[]}}),
+    zr:zr.map(function(i){return{i:i,order:shuffle([0,1,2],r),pick:null}}),
+    rz:rz.map(function(i){return{i:i,txt:""}})};
+}
+
+/* ---------- anti-cheat ---------- */
+var running=false, lastV=0, fsEntered=false, finishing=false;
+function block(e){if(running){e.preventDefault();return false}}
+["copy","cut","paste","contextmenu","dragstart","drop"].forEach(function(ev){document.addEventListener(ev,block,true)});
+document.addEventListener("keydown",function(e){
+  if(!running)return;
+  var k=(e.key||"").toLowerCase();
+  if((e.ctrlKey||e.metaKey)&&["c","v","x","a","p","s","u","f"].indexOf(k)>=0){e.preventDefault()}
+  if(k==="f12")e.preventDefault();
+},true);
+function violation(why){
+  if(!running||finishing)return;
+  var now=Date.now(); if(now-lastV<1500)return; lastV=now;
+  S.exits++; save(); updExits();
+  if(S.exits>=MAX_EXITS){finish("Тест завершён досрочно: вы вышли из него "+S.exits+" раза.");return}
+  showOv(why);
+}
+function showOv(why){
+  document.getElementById("ovText").innerHTML=esc(why)+"<br>Это выход <b>"+S.exits+" из "+MAX_EXITS+"</b>. После третьего тест завершится автоматически, а таймер не останавливается.";
+  document.getElementById("ov").classList.add("on");
+}
+document.getElementById("ovBtn").onclick=function(){document.getElementById("ov").classList.remove("on");goFS()};
+document.addEventListener("visibilitychange",function(){if(document.visibilityState==="hidden")violation("Вы переключились на другую вкладку или приложение.")});
+document.addEventListener("fullscreenchange",function(){if(fsEntered&&!document.fullscreenElement)violation("Вы вышли из полноэкранного режима.")});
+document.addEventListener("webkitfullscreenchange",function(){if(fsEntered&&!document.webkitFullscreenElement)violation("Вы вышли из полноэкранного режима.")});
+window.addEventListener("beforeunload",function(e){if(running){e.preventDefault();e.returnValue=""}});
+function goFS(){
+  var d=document.documentElement, f=d.requestFullscreen||d.webkitRequestFullscreen;
+  if(!f)return;
+  try{var p=f.call(d);if(p&&p.then)p.then(function(){fsEntered=true}).catch(function(){});else fsEntered=true}catch(e){}
+}
+function updExits(){document.getElementById("exN").textContent=S.exits}
+
+/* ---------- timer ---------- */
+var tmr=null;
+function tick(){
+  var left=LIMIT-(Date.now()-S.start), t=document.getElementById("timer");
+  t.textContent="⏱ "+fmt(left); t.classList.toggle("warn",left<=120000);
+  if(left<=0)finish("Время вышло. Тест завершён, засчитаны ответы, которые вы успели дать.");
+}
+
+/* ---------- screens ---------- */
+var main=document.getElementById("main"), cur=0;
+var SECS=[
+ {id:"m",ico:"🧩",title:"Иероглиф — пиньинь — перевод",short:"Слова"},
+ {id:"b",ico:"🧱",title:"Составьте предложение",short:"Предложения"},
+ {id:"zr",ico:"📖",title:"Переведите на русский",short:"Кит → рус"},
+ {id:"rz",ico:"✍️",title:"Переведите на китайский",short:"Рус → кит"}
+];
+
+function startScreen(){
+  document.getElementById("top").classList.add("hide");
+  main.innerHTML="";
+  var c=el("div","card");
+  c.innerHTML='<div class="hero">🏮 📝</div><h1>Проверочный тест: уроки 1–24</h1>'+
+   '<p class="lead">По учебнику Кондрашевского, т. 1.</p>'+
+   '<ul class="rules">'+
+   '<li>🧩 Сопоставьте иероглиф, пиньинь и перевод — 12 слов.</li>'+
+   '<li>🧱 Составьте предложения из слов — 6 заданий.</li>'+
+   '<li>📖 Выберите правильный перевод на русский — 5 заданий.</li>'+
+   '<li>✍️ Напишите перевод на китайский иероглифами — 5 заданий.</li>'+
+   '</ul>'+
+   '<p>⏱ На всё <b>40 минут</b>. Таймер не останавливается. Когда время выйдет, тест завершится сам.</p>'+
+   '<p>🚪 Тест откроется на весь экран. Нельзя переключаться на другие вкладки и приложения, выходить из полноэкранного режима и перезагружать страницу. Каждый выход засчитывается, после <b>третьего</b> тест завершается досрочно. Копирование и вставка отключены.</p>'+
+   '<p>Правильные ответы во время теста не показываются. Переходить между разделами можно в любом порядке.</p>'+
+   '<label>Имя и фамилия<br><input type="text" id="nm" autocomplete="off" maxlength="60"></label>'+
+   '<div class="row" style="margin-top:12px"><button class="btn" id="go" disabled>Начать тест</button></div>';
+  main.appendChild(c);
+  var nm=c.querySelector("#nm"), go=c.querySelector("#go");
+  nm.oninput=function(){go.disabled=nm.value.trim().length<2};
+  go.onclick=function(){S=newSession(nm.value.trim());save();goFS();run()};
+}
+
+function run(){
+  running=true; document.body.classList.add("locked");
+  document.getElementById("top").classList.remove("hide");
+  updExits(); tick(); tmr=setInterval(tick,500);
+  render();
+}
+
+function counts(){
+  var m=0;S.rounds.forEach(function(rd,k){rd.ids.forEach(function(id){var a=S.match[k][id];if(a&&a.p!=null&&a.t!=null)m++})});
+  var b=S.build.filter(function(x){return x.ans.length}).length;
+  var z=S.zr.filter(function(x){return x.pick!=null}).length;
+  var r=S.rz.filter(function(x){return norm(x.txt)}).length;
+  return [[m,12],[b,6],[z,5],[r,5]];
+}
+function renderTabs(){
+  var t=document.getElementById("tabs"),cs=counts();t.innerHTML="";
+  SECS.forEach(function(s,i){var b=el("button","tab"+(i===cur?" on":""),s.ico+" "+s.short+'<span class="cnt">'+cs[i][0]+"/"+cs[i][1]+"</span>");b.onclick=function(){cur=i;render();scrollTo(0,0)};t.appendChild(b)});
+}
+function render(){
+  renderTabs(); main.innerHTML="";
+  var s=SECS[cur], c=el("div","card");
+  c.appendChild(el("h2",null,s.ico+" "+(cur+1)+". "+s.title));
+  ({m:rMatch,b:rBuild,zr:rZR,rz:rRZ})[s.id](c);
+  main.appendChild(c);
+  var nav=el("div","nav");
+  var pv=el("button","btn ghost","← Назад");pv.disabled=cur===0;pv.onclick=function(){cur--;render();scrollTo(0,0)};
+  nav.appendChild(pv);
+  if(cur<SECS.length-1){var nx=el("button","btn","Далее →");nx.onclick=function(){cur++;render();scrollTo(0,0)};nav.appendChild(nx)}
+  else{var fn=el("button","btn","Завершить тест ✅");fn.onclick=askFinish;nav.appendChild(fn)}
+  main.appendChild(nav);
+}
+
+/* matching */
+var act=[null,null];
+function rMatch(c){
+  c.appendChild(el("p","lead","Нажмите на иероглиф, затем на его пиньинь и на перевод — у всех троих появится одинаковый номер. Чтобы отменить выбор, нажмите на пиньинь или перевод ещё раз."));
+  S.rounds.forEach(function(rd,k){
+    var box=el("div","round");box.appendChild(el("b",null,"Раунд "+(k+1)));
+    var g=el("div","mgrid"), ch=el("div","mcol"), cp=el("div","mcol"), ct=el("div","mcol tr");
+    ch.appendChild(el("h3",null,"Иероглифы"));cp.appendChild(el("h3",null,"Пиньинь"));ct.appendChild(el("h3",null,"Перевод"));
+    var mp=S.match[k], num={};
+    rd.ids.forEach(function(id,n){num[id]=n});
+    function badge(n){return '<span class="b" style="background:'+COLORS[n]+'">'+(n+1)+"</span>"}
+    function owner(field,val){for(var h in mp){if(mp[h][field]===val)return +h}return null}
+    rd.ids.forEach(function(id){
+      var b=el("button","mi h z"+(act[k]===id?" act":""),esc(WORDS[id][0])+badge(num[id]));
+      b.onclick=function(){act[k]=(act[k]===id?null:id);render()};
+      ch.appendChild(b);
+    });
+    [["p",rd.py,1,cp],["t",rd.tr,2,ct]].forEach(function(cfg){
+      var field=cfg[0];
+      cfg[1].forEach(function(val){
+        var o=owner(field,val);
+        var b=el("button","mi",esc(WORDS[val][cfg[2]])+(o!=null?badge(num[o]):""));
+        b.onclick=function(){
+          if(o!=null){mp[o][field]=null;if(act[k]==null)act[k]=o}
+          else if(act[k]!=null){mp[act[k]]=mp[act[k]]||{};mp[act[k]][field]=val}
+          else{return flash(box)}
+          save();render();
+        };
+        cfg[3].appendChild(b);
+      });
+    });
+    g.appendChild(ch);g.appendChild(cp);g.appendChild(ct);box.appendChild(g);c.appendChild(box);
+  });
+}
+function flash(box){var p=box.querySelector(".mcol");p.style.outline="2px solid #b8322a";setTimeout(function(){p.style.outline=""},500)}
+
+/* build */
+function rBuild(c){
+  c.appendChild(el("p","lead","Нажимайте на слова по порядку. Чтобы убрать слово, нажмите на него в строке ответа."));
+  S.build.forEach(function(it,n){
+    var B=BUILD[it.i], d=el("div","item");
+    d.appendChild(el("p","ru",(n+1)+". "+esc(B[2])));
+    var ans=el("div","ans"), pool=el("div","pool");
+    it.ans.forEach(function(ti,pos){var t=el("button","tile z",esc(B[0][ti]));t.onclick=function(){it.ans.splice(pos,1);save();render()};ans.appendChild(t)});
+    it.order.forEach(function(ti){var t=el("button","tile z"+(it.ans.indexOf(ti)>=0?" used":""),esc(B[0][ti]));t.onclick=function(){if(it.ans.indexOf(ti)<0){it.ans.push(ti);save();render()}};pool.appendChild(t)});
+    d.appendChild(ans);d.appendChild(pool);c.appendChild(d);
+  });
+}
+
+/* zh -> ru */
+function rZR(c){
+  c.appendChild(el("p","lead","Выберите правильный перевод."));
+  S.zr.forEach(function(it,n){
+    var Q=ZR[it.i], d=el("div","item");
+    d.appendChild(el("p","zhq z",(n+1)+". "+esc(Q[0])));
+    it.order.forEach(function(oi){
+      var b=el("button","opt"+(it.pick===oi?" on":""),esc(Q[1][oi]));
+      b.onclick=function(){it.pick=oi;save();render()};d.appendChild(b);
+    });
+    c.appendChild(d);
+  });
+}
+
+/* ru -> zh */
+function rRZ(c){
+  c.appendChild(el("p","lead","Напишите перевод иероглифами (на китайской раскладке). Знаки препинания и пробелы не важны."));
+  S.rz.forEach(function(it,n){
+    var Q=RZ[it.i], d=el("div","item");
+    d.appendChild(el("p","ru",(n+1)+". "+esc(Q[0])));
+    var inp=el("input","zh z");inp.type="text";inp.value=it.txt;inp.setAttribute("autocomplete","off");inp.setAttribute("autocorrect","off");inp.setAttribute("spellcheck","false");
+    inp.oninput=function(){it.txt=inp.value;save();renderTabs()};
+    d.appendChild(inp);c.appendChild(d);
+  });
+}
+
+function askFinish(){
+  var cs=counts(), empty=cs.reduce(function(a,x){return a+(x[1]-x[0])},0);
+  main.innerHTML="";
+  var c=el("div","card");
+  c.innerHTML='<h2>Завершить тест?</h2><p>'+(empty?'Без ответа осталось заданий: <b>'+empty+'</b>.':'Вы ответили на все задания.')+' После завершения изменить ответы будет нельзя.</p>';
+  var r=el("div","row"), y=el("button","btn","Да, завершить"), n=el("button","btn ghost","Вернуться");
+  y.onclick=function(){finish("")};n.onclick=function(){render()};
+  r.appendChild(y);r.appendChild(n);c.appendChild(r);main.appendChild(c);
+}
+
+/* ---------- scoring ---------- */
+function score(){
+  var m=0;S.rounds.forEach(function(rd,k){rd.ids.forEach(function(id){var a=S.match[k][id];if(a&&a.p===id&&a.t===id)m++})});
+  var b=0, bl=[];S.build.forEach(function(it){var B=BUILD[it.i];var s=it.ans.map(function(t){return B[0][t]}).join("");var ok=it.ans.length===B[0].length&&B[1].indexOf(s)>=0;if(ok)b++;bl.push([B[2],s,ok])});
+  var z=0, zl=[];S.zr.forEach(function(it){var ok=it.pick===0;if(ok)z++;zl.push([ZR[it.i][0],it.pick==null?"—":ZR[it.i][1][it.pick],ok])});
+  var r=0, rl=[];S.rz.forEach(function(it){var Q=RZ[it.i];var ok=Q[1].indexOf(norm(it.txt))>=0;if(ok)r++;rl.push([Q[0],it.txt||"—",ok])});
+  return{m:m,b:b,z:z,r:r,total:m+b+z+r,max:28,bl:bl,zl:zl,rl:rl};
+}
+
+function finish(msg){
+  if(!S||S.done&&running===false){}
+  finishing=true; running=false; clearInterval(tmr);
+  document.getElementById("ov").classList.remove("on");
+  if(!S.done){S.done=true;S.sec=Math.min(LIMIT,Date.now()-S.start)/1000|0;S.msg=msg||"";save()}
+  try{if(document.fullscreenElement&&document.exitFullscreen)document.exitFullscreen()}catch(e){}
+  document.body.classList.remove("locked");
+  result();
+}
+
+function result(){
+  document.getElementById("top").classList.add("hide");
+  var R=score(), code=codeOf(S.name,R.total,R.max,S.exits,S.sec);
+  var pct=Math.round(R.total/R.max*100), em=pct>=85?"🏆":pct>=70?"👍":pct>=50?"🙂":"📚";
+  var mm=Math.floor(S.sec/60), ss=S.sec%60;
+  main.innerHTML="";
+  var c=el("div","card");
+  var h='<div class="hero">'+em+'</div><h1>Тест завершён</h1>'+
+   (S.msg?'<p class="bad">'+esc(S.msg)+'</p>':'')+
+   '<table class="res">'+
+   '<tr><th>Ученик</th><td><b>'+esc(S.name)+'</b></td></tr>'+
+   '<tr><th>Результат</th><td><b>'+R.total+' из '+R.max+'</b> ('+pct+'%)</td></tr>'+
+   '<tr><th>🧩 Слова</th><td>'+R.m+' / 12</td></tr>'+
+   '<tr><th>🧱 Предложения</th><td>'+R.b+' / 6</td></tr>'+
+   '<tr><th>📖 Кит → рус</th><td>'+R.z+' / 5</td></tr>'+
+   '<tr><th>✍️ Рус → кит</th><td>'+R.r+' / 5</td></tr>'+
+   '<tr><th>⏱ Время</th><td>'+mm+' мин '+ss+' с</td></tr>'+
+   '<tr><th>🚪 Выходов из теста</th><td>'+S.exits+'</td></tr>'+
+   '</table>'+
+   '<p style="margin-top:14px">Проверочный код: <span class="code">'+code+'</span></p>'+
+   '<p class="small">Сделайте скриншот этого экрана и отправьте преподавателю.</p>';
+  h+='<h2 style="margin-top:18px">Ваши ответы</h2><p class="small">✓ — верно, ✗ — неверно. Правильные варианты разберёте с преподавателем.</p>';
+  h+='<p><b>🧱 Предложения</b></p>'+R.bl.map(function(x){return '<div>'+(x[2]?'<span class="ok">✓</span>':'<span class="bad">✗</span>')+' '+esc(x[0])+' — <span class="z">'+esc(x[1]||"—")+'</span></div>'}).join("");
+  h+='<p><b>📖 Кит → рус</b></p>'+R.zl.map(function(x){return '<div>'+(x[2]?'<span class="ok">✓</span>':'<span class="bad">✗</span>')+' <span class="z">'+esc(x[0])+'</span> — '+esc(x[1])+'</div>'}).join("");
+  h+='<p><b>✍️ Рус → кит</b></p>'+R.rl.map(function(x){return '<div>'+(x[2]?'<span class="ok">✓</span>':'<span class="bad">✗</span>')+' '+esc(x[0])+' — <span class="z">'+esc(x[1])+'</span></div>'}).join("");
+  c.innerHTML=h;
+  var t=el("div","card");
+  t.innerHTML='<p class="small">Для преподавателя: чтобы на этом устройстве начал тест другой ученик, введите PIN.</p>';
+  var r=el("div","row"), p=el("input");p.type="password";p.placeholder="PIN";p.style.maxWidth="140px";
+  var b=el("button","btn ghost","Новый ученик");
+  b.onclick=function(){if(p.value===PIN){try{localStorage.removeItem(KEY)}catch(e){}S=null;finishing=false;fsEntered=false;startScreen()}else{p.value="";p.placeholder="неверный PIN"}};
+  r.appendChild(p);r.appendChild(b);t.appendChild(r);
+  main.appendChild(c);main.appendChild(t);
+}
+
+/* ---------- boot ---------- */
+S=load();
+if(S&&S.done){result()}
+else if(S){
+  if(Date.now()-S.start>=LIMIT){finish("Время вышло. Тест завершён, засчитаны ответы, которые вы успели дать.")}
+  else{
+    run();
+    S.exits++;save();updExits();
+    if(S.exits>=MAX_EXITS)finish("Тест завершён досрочно: вы вышли из него "+S.exits+" раза.");
+    else showOv("Страница была перезагружена или закрыта.");
+  }
+}
+else startScreen();
+})();
+</script>
+</body>
+</html>
